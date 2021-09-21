@@ -1,0 +1,33 @@
+game_objects.png
+size: 108, 58
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+platforms-1
+  rotate: false
+  xy: 0, 0
+  size: 36, 33
+  orig: 36, 33
+  offset: 0, 0
+  index: -1
+platforms-2
+  rotate: false
+  xy: 36, 0
+  size: 36, 33
+  orig: 36, 33
+  offset: 0, 0
+  index: -1
+platforms-3
+  rotate: false
+  xy: 72, 0
+  size: 36, 33
+  orig: 36, 33
+  offset: 0, 0
+  index: -1
+player
+  rotate: false
+  xy: 0, 33
+  size: 28, 25
+  orig: 28, 25
+  offset: 0, 0
+  index: -1
