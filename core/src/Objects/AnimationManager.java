@@ -224,6 +224,19 @@ public class AnimationManager {
         return new Animation<TextureRegion>(frameRate, walkFrames);
     }
 
+    public void removeOverlayElement(GameObject element)
+    {
+        for (GameObject object: overlayItems)
+        {
+            if (object == element)
+            {
+                overlayItems.removeValue(object,true);
+                System.out.println("Working");
+            }
+
+        }
+    }
+
     public Viewport getViewport()
     {
         return viewport;

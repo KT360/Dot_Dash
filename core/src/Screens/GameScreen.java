@@ -48,6 +48,7 @@ public class GameScreen extends InputAdapter implements Screen {
     private Pool<Platform> platformPool;
     private float maxX;
     private float maxY;
+    private boolean inTutorial = true;
     private float platformSpawnTime = 2.5f;
     private Music gameMusic;
     private float platform_vel_increase = 2;
@@ -130,7 +131,7 @@ public class GameScreen extends InputAdapter implements Screen {
         show_tutorial = new Timer.Task() {
             @Override
             public void run() {
-                entities.add(press_button);
+                GameVariables.gameIsPaused = true;
             }
         };
 
@@ -208,11 +209,34 @@ public class GameScreen extends InputAdapter implements Screen {
 
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                buttonPressed++;
 
                 Vector3 worldCoords = renderer.getCamera().unproject(new Vector3(screenX,screenY,0));//Convert screen coordinates to world coordinates
                 if (!game_opt_button_rect.contains(worldCoords.x,worldCoords.y))                        //Check if we are hitting the button before performing any action
                 {
+                    if(GameVariables.inGame)
+                    {
+                        buttonPressed++;
+                    }
+
+                    if(inTutorial) {
+
+                        for (GameObject object : entities) {
+                            //If true that means the tutorial is playing, pause the game
+                            if (object.equals(press_button)) {
+                                GameVariables.gameIsPaused = false;
+                                if(buttonPressed == 1)
+                                {
+                                    tutorialTimer.scheduleTask(show_tutorial, 0.5f);
+                                }else if(buttonPressed == 2)
+                                {
+                                    inTutorial = false;
+                                    entities.removeValue(press_button,true);
+                                    renderer.removeOverlayElement(press_button);
+                                }
+                                break;
+                            }
+                        }
+                    }
                     if (GameVariables.movementPointer >= 1 )
                     {
                         GameVariables.movementPointer++;
@@ -299,10 +323,12 @@ public class GameScreen extends InputAdapter implements Screen {
         engine = new CollisionManager();
         Gdx.input.setInputProcessor(stage);
 
-        GameVariables.gameIsPaused = false;
+        GameVariables.gameIsPaused = true;
         GameVariables.platform_velocity = -2;
         gameMusic.play();
         gameMusic.setLooping(true);
+
+        GameVariables.inGame = true;
 
     }
 
@@ -338,15 +364,6 @@ public class GameScreen extends InputAdapter implements Screen {
             platformTimer.scheduleTask(spawnPlatform,platformSpawnTime,platformSpawnTime);
             GameVariables.platform_velocity -= platform_vel_increase;
             GameVariables.milestoneReached = false;
-        }
-
-        for (GameObject object: entities)
-        {
-            //If true that means the tutorial is playing, pause the game
-            if (object.equals(press_button)) {
-                GameVariables.gameIsPaused = true;
-                break;
-            }
         }
 
         if (!GameVariables.gameIsPaused)

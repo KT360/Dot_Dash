@@ -6,6 +6,7 @@ public class GameVariables {
     public static boolean milestoneReached = false;
     public static boolean playerHasDied = false;
     public static boolean can_show_tutorial = true;
+    public static boolean inGame = false;
     public static float platform_velocity = -2;
     public static int score = 0;
     public static int currentMilestone = 50;

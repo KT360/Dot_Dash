@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
+import Objects.GameVariables;
 import Objects.GuiElement;
 
 public class MenuScreen implements Screen {
